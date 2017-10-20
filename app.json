@@ -1,18 +1,17 @@
 {
   "expo": {
-    "name": "hackathon-app",
-    "description": "An empty new project",
-    "slug": "hackathon-app",
+    "name": "hohoho",
+    "description": "Like Yo but not",
+    "slug": "hohoho",
     "privacy": "public",
-    "sdkVersion": "22.0.0",
+    "sdkVersion": "18.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "primaryColor": "#F5FCFF",
+    "icon": "./assets/icons/app.png",
+    "loading": {
+      "icon": "./assets/icons/loading.png",
+      "hideExponentText": false
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]

@@ -1,11 +1,15 @@
 {
-  "name": "hackathon-app",
+  "name": "hohoho",
   "version": "0.0.0",
   "description": "Hello Expo!",
   "author": "",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
+
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "react-navigation": "^1.0.0-beta.11",
     "@google-cloud/pubsub": "^0.14.5",
     "@google-cloud/storage": "^1.4.0",
     "@google-cloud/translate": "^1.0.0",
