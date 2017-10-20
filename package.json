@@ -1,18 +1,21 @@
 {
-  "name": "hackathon-app",
+  "name": "hohoho",
   "version": "0.0.0",
   "description": "Hello Expo!",
   "author": "",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "react-navigation": "^1.0.0-beta.11",
     "@google-cloud/pubsub": "^0.14.5",
     "@google-cloud/storage": "^1.4.0",
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
     "event-parser.js": "^0.1.4",
     "expo": "^22.0.0",
-    "react": "^16.0.0-beta.5",
+    "react": "16.0.0-beta.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
     "safe-buffer": "^5.1.1"
   },
