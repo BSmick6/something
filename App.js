@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
+const domain = "https://something-horizons.herokuapp.com";
+//const domain = "https://hohoho-backend.herokuapp.com"; // Old Server
 
 // var bodyParser = require('body-parser');
 // app.use(bodyParser.urlencoded({extended: true}));
@@ -147,7 +149,7 @@ class RegisterScreen extends React.Component {
   };
   postLogin() {
   console.log('hhhhhhhh');
-    return fetch('https://hohoho-backend.herokuapp.com/register', {
+    return fetch(`${domain}/register`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -208,18 +210,27 @@ class RealLoginScreen extends React.Component {
     title: 'RealLogin'
   };
   postSignin() {
-  console.log('signing in');
-  return fetch('https://hohoho-backend.herokuapp.com/login')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.success === true) {
-        console.log('ds', ds)
-        this.setState({dataSource: ds.cloneWithRows(responseJson.users)})
-      } else {
-        alert('invalid')
-      }
-      console.log(responseJson)
+    console.log('signing in');
+    return fetch(`${domain}/login`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      })
     })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      console.log('ds', ds)
+      this.setState({dataSource: ds.cloneWithRows(responseJson.users)})
+    } else {
+      alert('invalid')
+    }
+    console.log(responseJson)
+  })
     .catch((err) => {
       console.log('it errored')
     });
@@ -260,7 +271,7 @@ class UsersScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    fetch('https://hohoho-backend.herokuapp.com/users')
+    fetch(`${domain}/users`)
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === true) {
@@ -277,7 +288,7 @@ class UsersScreen extends React.Component {
   }
   touchUser(user) {
   console.log('touch user');
-    return fetch('https://hohoho-backend.herokuapp.com/messages', {
+    return fetch(`${domain}/messages`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -306,7 +317,7 @@ class UsersScreen extends React.Component {
   }
   longTouchUser(user, lat, long) {
   console.log('long touch user');
-    return fetch('https://hohoho-backend.herokuapp.com/messages', {
+    return fetch(`${domain}/messages`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -380,7 +391,7 @@ class MessagesScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    fetch('https://hohoho-backend.herokuapp.com/messages')
+    fetch(`${domain}/messages`)
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === true) {
