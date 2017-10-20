@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
-
+const domain = "https://something-horizons.herokuapp.com";
+import styles from '../styles/styles';
 
 class UsersScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -28,7 +29,7 @@ class UsersScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    fetch('https://hohoho-backend.herokuapp.com/users')
+    fetch(`${domain}/users`)
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === true) {
@@ -45,7 +46,7 @@ class UsersScreen extends React.Component {
   }
   touchUser(user) {
   console.log('touch user');
-    return fetch('https://hohoho-backend.herokuapp.com/messages', {
+    return fetch(`${domain}/messages`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -74,7 +75,7 @@ class UsersScreen extends React.Component {
   }
   longTouchUser(user, lat, long) {
   console.log('long touch user');
-    return fetch('https://hohoho-backend.herokuapp.com/messages', {
+    return fetch(`${domain}/messages`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -137,3 +138,5 @@ class UsersScreen extends React.Component {
     )
   }
 }
+
+export default UsersScreen;

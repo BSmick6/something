@@ -13,9 +13,10 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
+const domain = "https://something-horizons.herokuapp.com";
+import styles from '../styles/styles';
 
-
-class RealLoginScreen extends React.Component {
+class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,11 +26,11 @@ class RealLoginScreen extends React.Component {
     }
   }
   static navigationOptions = {
-    title: 'RealLogin'
+    title: 'Login'
   };
   postSignin() {
   console.log('signing in');
-  return fetch('https://hohoho-backend.herokuapp.com/login')
+  return fetch(`${domain}/login`)
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.success === true) {
@@ -65,3 +66,5 @@ class RealLoginScreen extends React.Component {
     )
   }
 }
+
+export default LoginScreen;
