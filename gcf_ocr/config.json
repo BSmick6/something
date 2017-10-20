@@ -1,7 +1,0 @@
-{
-  "RESULT_TOPIC": "horizons-result-topic",
-  "RESULT_BUCKET": "horizons-text-bucket",
-  "TRANSLATE_TOPIC": "horizons-translate-topic",
-  "TRANSLATE": true,
-  "TO_LANG": ["en", "fr", "es", "ja", "ru", "kr"]
-}
