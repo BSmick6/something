@@ -1,8 +1,18 @@
 import React from 'react';
-import { Button, Image, View } from 'react-native';
+import { connect } from 'react-redux';
+import { CameraRoll, Button, Image, View } from 'react-native';
 import { ImagePicker } from 'expo';
 
-export default class ImagePickerExample extends React.Component {
+const mapStateToProps = (state) => {
+  return{
+    image: state
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  updatePhoto: (image) => {dispatch(update(image))}
+});
+
+class ImagePickerExample extends React.Component {
   state = {
     image: null,
   };
@@ -18,10 +28,18 @@ export default class ImagePickerExample extends React.Component {
         />
         {image &&
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        <Button
+          title="Take a new picture"
+          onPress={this._takePhoto} />
       </View>
     );
   }
-
+  _takePhoto = async () => {
+    let result = await CameraRoll.saveToCameraRoll((Expo.ImagePicker.launchCameraAsync({})).uri);
+    if(!result.cancelled){
+      this.setState({image: result.uri});
+    }
+  }
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -35,3 +53,6 @@ export default class ImagePickerExample extends React.Component {
     }
   };
 }
+ImagePickerExample = connect(mapStateToProps, mapDispatchToProps)(ImagePickerExample);
+
+export default ImagePickerExample;
