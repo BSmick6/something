@@ -1,6 +1,6 @@
 // Imports the Google Cloud client libraries
 const Vision = require('@google-cloud/vision');
-
+const EventParser = require('event-parser.js').EventParser;
 // Instantiates clients
 const vision = Vision();
 
@@ -19,11 +19,12 @@ function textDetect(path){
   //let text =[];
   vision.textDetection({source: {filename: path}})
   .then((results) => {
-    const detections = results[0].textAnnotations;
-
-    console.log(results[0].fullTextAnnotation.text);
-    console.log('Text:');
-    //detections.forEach((text) => console.log(text));
+    const detections = results[0].fullTextAnnotation.text;
+    var parsed = detections.parseEvent({
+      onParsed: () => {
+        console.log(parsed);
+      }
+    });
   })
   .catch((err) => {
     console.error('ERROR:', err);
