@@ -30,12 +30,20 @@ class LoginScreen extends React.Component {
   };
   postSignin() {
   console.log('signing in');
-  return fetch(`${domain}/login`)
+  return fetch(`${domain}/login`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: this.state.username,
+      password: this.state.password
+    })
+  })
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.success === true) {
-        console.log('ds', ds)
-        this.setState({dataSource: ds.cloneWithRows(responseJson.users)})
+        this.props.navigation.navigate('Users')
       } else {
         alert('invalid')
       }

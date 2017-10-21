@@ -33,12 +33,15 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('Register');
   }
   postFb() {
-  console.log('hhhhhhhh');
-    return fetch('https://fb/login')
-        .then((response) => response.json())
+    return fetch(`${domain}/auth/facebook`)
+        .then((response) => {
+          console.log('RESPONSE MOTHAFUCKA', response);
+          return response.json()
+        })
         .then((responseJson) => {
+          console.log(responseJson);
           if (responseJson.success === true) {
-            console.log('ds', ds)
+            console.log('SUCCESS');
 
           } else {
             alert('invalid')
@@ -46,7 +49,7 @@ class HomeScreen extends React.Component {
           console.log(responseJson)
         })
         .catch((err) => {
-          console.log('it errored')
+          console.log('it errored', err)
         });
   }
   _pickImage = async () => {

@@ -28,7 +28,6 @@ class RegisterScreen extends React.Component {
     title: 'Register'
   };
   postLogin() {
-  console.log('hhhhhhhh');
     return fetch(`${domain}/register`, {
         method: 'POST',
         headers: {
@@ -48,11 +47,12 @@ class RegisterScreen extends React.Component {
         } else {
           alert('invalid')
         }
-        console.log(responseJson)
+        console.log('responseJson user',responseJson.user);
+        console.log('responseJson success',responseJson.success);
       })
       .catch((err) => {
         /* do something if there was an error with fetching */
-        console.log('it errored')
+        console.log('it errored', err)
       });
   }
 

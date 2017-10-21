@@ -2,21 +2,21 @@ var chrono = require('chrono-node')
 var request = require("request");
 const test1 = "Please come see Betsy for $5 jump through a ring of fire! Thursay the 18th of January he will attempt this daring feat at 221 7th St, San Francisco! Paul and Ross will also come.";
 
-var options = {
-  method: 'POST',
-  url: 'http://api.meaningcloud.com/topics-2.0',
-  headers: {
-    'content-type': 'application/x-www-form-urlencoded'
-  },
-  form: {
-    key: '353eec81498299ab90b21b50cf50007b',
-    lang: 'en',
-    txt: test1,
-    ilang: 'en',
-    tt: 'etm'
-  }
-};
 function readText(text, cb) {
+  var options = {
+    method: 'POST',
+    url: 'http://api.meaningcloud.com/topics-2.0',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    form: {
+      key: '353eec81498299ab90b21b50cf50007b',
+      lang: 'en',
+      txt: text,
+      ilang: 'en',
+      tt: 'etm'
+    }
+  };
   request(options, function(error, response, body) {
     body = JSON.parse(body);
     if (error)
@@ -55,9 +55,15 @@ function readText(text, cb) {
       return true
     });
     info.people = people;
-    info.place = place
-    console.log(info);
-    cb(error,info);
+    info.place = place;
+    if (text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)) {
+      info.email = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+    }
+    if (text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi)) {
+      info.phone = text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi);
+    }
+    // console.log(info);
+    return cb(error,info);
   });
 }
 module.exports = readText;

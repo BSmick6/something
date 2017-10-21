@@ -1,29 +1,49 @@
 const Vision = require('@google-cloud/vision');
 const vision = Vision();
 const fileName = './images/golf.jpg';
+const readText = require('./readText');
 
 //const gcsPath = `gs://${bucketName}/${fileName}`;
 //vision.textDetection({ source: { imageUri: gcsPath } })
-function extractEmails (text){
-  return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
-}
-function extractPhone (text){
-  return text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi);
-}
+// function extractEmails (text){
+//   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+// }
+// function extractPhone (text){
+//   return text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi);
+// }
 function textDetect(path){
   let detections;
   vision.textDetection({source: {filename: path}})
   .then((results) => {
     detections = results[0].fullTextAnnotation.text;
-    console.log(detections);
-    console.log(extractEmails(detections));
-    console.log('0',extractPhone(detections));
-    return detections;
+
+    var RTpromise = new Promise(function(resolve,reject) {
+      readText(detections,function(err,info){
+        if (err) {
+          reject(err)
+        }
+        resolve(info)
+      })
+    })
+    RTpromise.then(info=>)
+    // parsed = readText(detections,function(err,info){
+    //   if (err) throw err
+    //   console.log(info);
+    //   return info
+    // });
+    console.log(parsed);
+    // console.log(detections);
+    return {
+      raw:detections,
+      parsed: parsed,
+    };
   })
   .catch((err) => {
     console.error('ERROR:', err);
   });
 }
+
+
 function logoDetect(path){
   vision.logoDetection({ source: { filename: path } })
   .then((results) => {
@@ -35,5 +55,7 @@ function logoDetect(path){
     console.error('ERROR:', err);
   });
 }
-logoDetect(fileName);
-textDetect(fileName);
+// logoDetect(fileName);
+const a = textDetect(fileName);
+// console.log("RAW",a.raw);
+// console.log("parsed",a.parsed);
