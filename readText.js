@@ -19,8 +19,9 @@ function readText(text) {
     };
     request(options, function(error, response, body) {
       body = JSON.parse(body);
-      if (error)
-      reject(error);
+      if (error) {
+        reject(error)
+      }
       let info = {};
       if (body.money_expression_list && body.money_expression_list.length !== 0) {
         const money = body.money_expression_list[0].form;
