@@ -17,15 +17,15 @@ function textDetect(path){
   .then((results) => {
     detections = results[0].fullTextAnnotation.text;
 
-    var RTpromise = new Promise(function(resolve,reject) {
-      readText(detections,function(err,info){
-        if (err) {
-          reject(err)
-        }
-        resolve(info)
-      })
-    })
-    RTpromise.then(info=>)
+    // var RTpromise = new Promise(function(resolve,reject) {
+    //   readText(detections,function(err,info){
+    //     if (err) {
+    //       reject(err)
+    //     }
+    //     resolve(info)
+    //   })
+    // })
+    // RTpromise.then(info=>)
     // parsed = readText(detections,function(err,info){
     //   if (err) throw err
     //   console.log(info);
@@ -33,10 +33,11 @@ function textDetect(path){
     // });
     console.log(parsed);
     // console.log(detections);
-    return {
-      raw:detections,
-      parsed: parsed,
-    };
+    // return {
+    //   raw:detections,
+    //   parsed: parsed,
+    // };
+    return detections
   })
   .catch((err) => {
     console.error('ERROR:', err);
@@ -59,3 +60,6 @@ function logoDetect(path){
 const a = textDetect(fileName);
 // console.log("RAW",a.raw);
 // console.log("parsed",a.parsed);
+
+
+module.exports = textDetect
