@@ -10,6 +10,7 @@
     "@google-cloud/storage": "^1.4.0",
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
+    "event-parser.js": "^0.1.4",
     "expo": "^22.0.0",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
