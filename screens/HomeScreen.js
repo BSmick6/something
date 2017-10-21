@@ -23,29 +23,29 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('Register');
   }
   google(){
-    this.props.navigation.navigate('Swiper');
-    return fetch(`${domain}/auth/google`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: ,
-      })
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.success) {
-          AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
-          this.props.navigation.navigate('Swiper');
-        } else {
-          alert('Invalid credentials bruh');
-        }
-      })
-      .catch((err) => {
-        /* do something if there was an error with fetching */
-        console.log('it errored', err)
-      });
+    // this.props.navigation.navigate('Swiper');
+    // return fetch(`${domain}/auth/google`, {
+    //   method: 'GET',
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     username: ,
+    //   })
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     if (responseJson.success) {
+    //       AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
+    //       this.props.navigation.navigate('Swiper');
+    //     } else {
+    //       alert('Invalid credentials bruh');
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     /* do something if there was an error with fetching */
+    //     console.log('it errored', err)
+    //   });
   }
   componentWillMount() {
     AsyncStorage.getItem('user')
