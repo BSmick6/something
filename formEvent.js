@@ -2,7 +2,8 @@ var chrono = require('chrono-node');
 var parse = require('parse-messy-schedule');
 
 function formEvent(info) {
-  new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
+    console.log(info);
     const dates = info.time.map(time=>chrono.parseDate(time));
     const dateStart = dates.reduce((actual,next)=>{
       if (!next) return actual
@@ -12,15 +13,16 @@ function formEvent(info) {
       if (!next) return actual
       return (actual<next)?actual:next
     })
-    const recurrence = parse(info.time.join(', '));
-    if (recurrence._every.every) {
-
-    }
-    console.log("RECURRENCE",recurrence,"\n\n\n\n\n");
+    const attendees = info.email.map(email=>({'email':email}));
+    attendees.concat(info.people.map(person=>({'displayName':person})));
+    // const recurrence = parse(info.time.join(', '));
+    // if (recurrence._every.every) {
+    //
+    // }
+    // console.log("RECURRENCE",recurrence,"\n\n\n\n\n");
     var event = {
-      'summary': "SOME SHIT HERE",
-      'location': info.place.join(),
-      'description': 'A chance to hear more about Google\'s developer products.',
+      'summary': info.raw.split(' ').slice(0,5).join(' '),
+      'location': info.place.join(', '),
       'start': {
         'dateTime': dateStart,
         'timeZone': 'America/Los_Angeles'
@@ -29,14 +31,10 @@ function formEvent(info) {
         'dateTime': dateEnd,
         'timeZone': 'America/Los_Angeles'
       },
-      'recurrence': ['RRULE:FREQ=DAILY;COUNT=2'],
-      'attendees': [
-        {
-          'email': 'lpage@example.com'
-        }, {
-          'email': 'sbrin@example.com'
-        }
-      ],
+      // 'recurrence': ['RRULE:FREQ=DAILY;COUNT=2'],
+      'attendees': attendees,
+      'description': info.raw,
+      'attachments': [],
       'reminders': {
         'useDefault': false,
         'overrides': [
@@ -50,9 +48,9 @@ function formEvent(info) {
         ]
       }
     };
-    if (err) {
-      reject(err)
-    }
+    // if (err) {
+    //   reject(err)
+    // }
     resolve(event)
   });
 }

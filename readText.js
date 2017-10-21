@@ -62,6 +62,7 @@ function readText(text) {
       if (text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi)) {
         info.phone = text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi);
       }
+      info.raw = text;
       // console.log(info);
       resolve(info);
 
