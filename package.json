@@ -11,6 +11,8 @@
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
     "expo": "^22.0.0",
+    "google-auth-library": "^0.11.0",
+    "googleapis": "^22.2.0",
     "parse-messy-schedule": "^2.0.3",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
