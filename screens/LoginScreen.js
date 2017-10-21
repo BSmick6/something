@@ -45,14 +45,14 @@ class LoginScreen extends React.Component {
     .then((responseJson) => {
       if (responseJson.success) {
         AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
-        this.props.navigation.navigate('Messages');
+        this.props.navigation.navigate('Swiper');
       } else {
         alert('Invalid credentials bruh');
       }
     })
     .catch((err) => {
       /* do something if there was an error with fetching */
-      console.log('it errored')
+      console.log('it errored', err)
     });
   }
   render() {
@@ -68,7 +68,7 @@ class LoginScreen extends React.Component {
             placeholder = "Password"
             secureTextEntry={true}
             onChangeText={(text) => this.setState({password: text})} />
-          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
+          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => this.postLogin() }>
             <Text style={styles.buttonLabel}>Login</Text>
           </TouchableOpacity>
         </View>

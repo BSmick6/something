@@ -11,7 +11,10 @@
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
     "expo": "^22.0.0",
+<<<<<<< HEAD
     "connect": "2.x",
+=======
+>>>>>>> 4c3c6d2ed4c0fa4386dee43e588fb499e3fbfb54
     "google-auth-library": "^0.11.0",
     "googleapis": "^22.2.0",
     "parse-messy-schedule": "^2.0.3",
@@ -19,6 +22,7 @@
     "passport-facebook": "^2.1.1",
     "react": "16.0.0-beta.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
+    "react-native-swiper": "^1.5.13",
     "react-navigation": "^1.0.0-beta.15",
     "safe-buffer": "^5.1.1"
   },
