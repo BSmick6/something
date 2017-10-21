@@ -29,7 +29,7 @@ class LoginScreen extends React.Component {
     title: 'Login'
   };
 
-  postSignin() {
+  postLogin() {
   console.log('signing in');
   return fetch(`${domain}/login`, {
     method: 'POST',
@@ -45,16 +45,16 @@ class LoginScreen extends React.Component {
     .then((responseJson) => {
       if (responseJson.success) {
         AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
-        this.props.navigation.navigate('Users');
+        this.props.navigation.navigate('Messages');
       } else {
         alert('Invalid credentials bruh');
       }
     })
     .catch((err) => {
+      /* do something if there was an error with fetching */
       console.log('it errored')
     });
   }
-
   render() {
     return (
         <View style={styles.container}>
@@ -68,7 +68,7 @@ class LoginScreen extends React.Component {
             placeholder = "Password"
             secureTextEntry={true}
             onChangeText={(text) => this.setState({password: text})} />
-          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postSignin()} }>
+          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
             <Text style={styles.buttonLabel}>Login</Text>
           </TouchableOpacity>
         </View>

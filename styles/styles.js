@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     fontSize: 36,
     textAlign: 'center',
     margin: 10,
+    fontWeight: 'bold',
+    fontFamily: 'AvenirNext-Medium'
   },
   button: {
     alignSelf: 'stretch',

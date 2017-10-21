@@ -11,7 +11,8 @@ import styles from '../styles/styles';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home'
+    title: 'Home',
+    header: null
   };
 
   press() {
@@ -26,7 +27,7 @@ class HomeScreen extends React.Component {
     AsyncStorage.getItem('user')
     .then((result) => {
       if(result) {
-        this.props.navigation.navigate('Users')
+        this.props.navigation.navigate('Messages')
       } else {
         console.log('no user loser');
       }
@@ -41,7 +42,7 @@ class HomeScreen extends React.Component {
           style={[styles.button, styles.buttonBlue]}>
           <Text style={styles.buttonLabel}>Tap to Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={ () => {this.register()} }
           style={[styles.button, styles.buttonBlue]}>
           <Text style={styles.buttonLabel}>Tap to Register</Text>

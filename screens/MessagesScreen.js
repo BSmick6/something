@@ -26,11 +26,11 @@ class MessagesScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    fetch(`${domain}/messages`)
+    fetch(`${domain}/events`)
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === true) {
-          console.log('RESPONSE JSON MESSAAGES', responseJson)
+          console.log('RESPONSE JSON events', responseJson)
           console.log('ds', ds)
           this.setState({dataSource: ds.cloneWithRows(responseJson.messages)})
         } else {
@@ -51,6 +51,9 @@ class MessagesScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.props.navigation.navigate('Create');} }>
+            <Text style={styles.buttonLabel}>Create Event</Text>
+        </TouchableOpacity>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) =>
