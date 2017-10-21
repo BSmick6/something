@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Image, View } from 'react-native';
 import { ImagePicker } from 'expo';
-// import processor from '../processor';
+import processor from '../processor';
 export default class ImagePickerExample extends React.Component {
   state = {
     image: null,
@@ -30,9 +30,9 @@ export default class ImagePickerExample extends React.Component {
   }
   submit() {
     console.log(this.state.image);
-    // processor(this.state.image).then(a=>{
-    //   console.log(a);
-    // })
+    processor(this.state.image).then(a=>{
+      console.log(a);
+    })
   }
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
