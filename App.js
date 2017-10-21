@@ -4,7 +4,9 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import MessagesScreen from './screens/MessagesScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import SaveScreen from './screens/SaveScreen';
 import UsersScreen from './screens/UsersScreen';
+import CreateEventScreen from './screens/CreateEventScreen';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
 const domain = "https://something-horizons.herokuapp.com";
 //const domain = "https://hohoho-backend.herokuapp.com"; // Old Server
@@ -60,7 +62,17 @@ export default StackNavigator({
   Messages: {
     screen: MessagesScreen,
   },
-}, {initialRouteName: 'Home'});
+  Save: {
+    screen: SaveScreen,
+  },
+  Create: {
+    screen: CreateEventScreen,
+  }
+}, {
+  initialRouteName: 'Home',
+  headerMode: 'screen'
+});
+
 
 
 

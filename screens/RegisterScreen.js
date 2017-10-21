@@ -39,12 +39,18 @@ class RegisterScreen extends React.Component {
           password: this.state.password,
         })
       })
-      .then((response) => response.json())
+      .then((response) => {
+          console.log('RESPONSE', response)
+          this.props.navigation.navigate('Login');
+          response.json()
+      })
       .then((responseJson) => {
         /* do something with responseJson and go back to the Login view but
          * make sure to check for responseJson.success! */
+        console.log('responseJson',responseJson);
         if (responseJson.success === true) {
-          this.props.navigation.goBack()
+          console.log('IT WAS TRUE')
+          this.props.navigation.navigate('Login');
         } else {
           alert('invalid')
         }
@@ -69,7 +75,7 @@ class RegisterScreen extends React.Component {
           secureTextEntry={true}
           onChangeText={(text) => this.setState({password: text})} />
         <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
-          <Text style={styles.buttonLabel}>Register</Text>
+          <Text style={styles.buttonLabel}>Register button</Text>
         </TouchableOpacity>
       </View>
     )

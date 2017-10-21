@@ -16,33 +16,35 @@ import { ImagePicker, Location, Permissions, MapView } from 'expo';
 const domain = "https://something-horizons.herokuapp.com";
 import styles from '../styles/styles';
 
-class LoginScreen extends React.Component {
+class CreateEventScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      message: ''
+        user: '',
+        displayName: '',
+        eventDate: '',
+        eventLocation: '',
+        eventDescription: ''
     }
   }
   static navigationOptions = {
-    title: 'Login'
+    title: 'CreateEvent'
   };
-  postLogin() {
-  console.log('signing in');
-  return fetch(`${domain}/register`, {
+  postCreateEvent() {
+  console.log('creating event');
+  return fetch(`${domain}/create`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
+          eventDate: this.state.eventDate,
+          eventLocation: this.state.eventLocation,
+          eventDescription: this.state.eventDescription
       })
     })
     .then((response) => {
         console.log('RESPONSE', response)
-        this.props.navigation.navigate('Messages');
         response.json()
     })
     .then((responseJson) => {
@@ -50,10 +52,9 @@ class LoginScreen extends React.Component {
        * make sure to check for responseJson.success! */
       console.log('responseJson',responseJson);
       if (responseJson.success === true) {
-        console.log('IT WAS TRUE')
-        this.props.navigation.navigate('Messages');
+        console.log('RESPONSE EVENT', response)
       } else {
-
+        alert('invalid')
       }
       console.log(responseJson)
     })
@@ -62,25 +63,29 @@ class LoginScreen extends React.Component {
       console.log('it errored')
     });
   }
+
   render() {
     return (
         <View style={styles.container}>
-          <Text>{this.state.message}</Text>
+          <Text>Create an event.</Text>
           <TextInput
             style={styles.input}
-            placeholder = "Username"
-            onChangeText={(text) => this.setState({username: text})} />
+            placeholder = "When is it?"
+            onChangeText={(text) => this.setState({eventDate: text})} />
           <TextInput
             style={styles.input}
-            placeholder = "Password"
-            secureTextEntry={true}
-            onChangeText={(text) => this.setState({password: text})} />
-          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
-            <Text style={styles.buttonLabel}>Login</Text>
+            placeholder = "Location"
+            onChangeText={(text) => this.setState({eventLocation: text})} />
+            <TextInput
+              style={styles.input}
+              placeholder = "Description"
+              onChangeText={(text) => this.setState({eventDescription: text})} />
+          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postCreateEvent()} }>
+            <Text style={styles.buttonLabel}>Post Your Event</Text>
           </TouchableOpacity>
         </View>
     )
   }
 }
 
-export default LoginScreen;
+export default CreateEventScreen;
