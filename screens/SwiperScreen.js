@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import CreateEventScreen from './CreateEventScreen';
 import ImagePickerScreen from './ImagePickerScreen';
-import SaveScreen from './SaveScreen';
+import CameraScreen from './CameraScreen';
+import EventsScreen from './EventsScreen';
 import Swiper from 'react-native-swiper';
 import styles from '../styles/styles.js';
 const domain = "https://something-horizons.herokuapp.com";
@@ -32,8 +33,9 @@ class SwiperScreen extends React.Component {
     return (
       <Swiper style={styles.container} showsPagination={false}>
         <CreateEventScreen />
+        <EventsScreen />
         <ImagePickerScreen />
-        <SaveScreen />
+        <CameraScreen />
       </Swiper>
     )
   }
