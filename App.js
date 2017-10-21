@@ -9,40 +9,6 @@ import { ImagePicker, Location, Permissions, MapView } from 'expo';
 const domain = "https://something-horizons.herokuapp.com";
 //const domain = "https://hohoho-backend.herokuapp.com"; // Old Server
 
-// var bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({extended: true}));
-
-// var passport = require('passport');
-// passport.serializeUser(function(user, done) {
-//     done(null, user);
-// });
-// passport.deserializeUser(function(user, done) {
-//     done(null, user);
-// })
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-// var FacebookStrategy = require('passport-facebook');
-//
-// passport.use(new FacebookStrategy({
-//     clientID: process.env.FACEBOOK_APP_ID,
-//     clientSecret: process.env.FACEBOOK_APP_SECRET,
-//     callbackURL: "http://localhost:3000/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken, profile, cb) {
-//     done(null, {
-//         token: accessToken,
-//         name: profile.displayName,
-//         id: profile.id
-//     });
-// }));
-
-// app.get('/fb/login', passport.authenticate('facebook'));
-// app.get('/fb/login/callback', passport.authenticate('facebook', {
-//     successRedirect: '/',
-//     failureRedirect: '/fail'
-// }))
-
 //Navigator
 export default StackNavigator({
   Home: {

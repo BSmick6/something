@@ -21,13 +21,14 @@ class LoginScreen extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      message: ''
+      password: ''
     }
   }
+
   static navigationOptions = {
     title: 'Login'
   };
+
   postSignin() {
   console.log('signing in');
   return fetch(`${domain}/login`, {
@@ -42,12 +43,12 @@ class LoginScreen extends React.Component {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.success === true) {
-        this.props.navigation.navigate('Users')
+      if (responseJson.success) {
+        AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
+        this.props.navigation.navigate('Users');
       } else {
-        alert('invalid')
+        alert('Invalid credentials bruh');
       }
-      console.log(responseJson)
     })
     .catch((err) => {
       console.log('it errored')

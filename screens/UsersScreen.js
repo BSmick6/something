@@ -38,7 +38,6 @@ class UsersScreen extends React.Component {
         } else {
           alert('invalid')
         }
-        console.log(responseJson)
       })
       .catch((err) => {
         console.log('it errored')
