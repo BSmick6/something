@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
-
+const domain = "https://something-horizons.herokuapp.com";
+import styles from '../styles/styles';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class RegisterScreen extends React.Component {
   };
   postLogin() {
   console.log('hhhhhhhh');
-    return fetch('https://hohoho-backend.herokuapp.com/register', {
+    return fetch(`${domain}/register`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -74,3 +75,5 @@ class RegisterScreen extends React.Component {
     )
   }
 }
+
+export default RegisterScreen;

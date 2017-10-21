@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
-
+const domain = "https://something-horizons.herokuapp.com";
+import styles from '../styles/styles';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -23,10 +24,10 @@ class HomeScreen extends React.Component {
     }
   };
   static navigationOptions = {
-    title: 'Login'
+    title: 'Home'
   };
   press() {
-    this.props.navigation.navigate('RealLogin');
+    this.props.navigation.navigate('Login');
   }
   register() {
     this.props.navigation.navigate('Register');
@@ -99,3 +100,5 @@ class HomeScreen extends React.Component {
     )
   }
 }
+
+export default HomeScreen;

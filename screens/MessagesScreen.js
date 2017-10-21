@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
-
+const domain = "https://something-horizons.herokuapp.com";
+import styles from '../styles/styles';
 
 class MessagesScreen extends React.Component {
   static navigationOptions = {
@@ -25,7 +26,7 @@ class MessagesScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows([])
     };
-    fetch('https://hohoho-backend.herokuapp.com/messages')
+    fetch(`${domain}/messages`)
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === true) {
@@ -65,3 +66,5 @@ class MessagesScreen extends React.Component {
     )
   }
 }
+
+export default MessagesScreen;
