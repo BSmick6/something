@@ -1,28 +1,3 @@
-var request = require("request");
-
-function readText(event,calID) {
-  return new Promise(function(resolve, reject) {
-    var options = {
-      method: 'POST',
-      url: 'https://www.googleapis.com/calendar/v3/calendars/' + calID + '/events',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      body: event
-    };
-    request(options, function(error, response, body) {
-      body = JSON.parse(body);
-      if (error) {
-        reject(error)
-      }
-    })
-  })
-}
-
-
-
-
-
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
@@ -121,34 +96,25 @@ function storeToken(token) {
 }
 
 /**
- * Lists the next 10 events on the user's primary calendar.
- *
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-function listEvents(auth) {
-  var calendar = google.calendar('v3');
-  calendar.events.list({
-    auth: auth,
-    calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
-    singleEvents: true,
-    orderBy: 'startTime'
-  }, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    var events = response.items;
-    if (events.length == 0) {
-      console.log('No upcoming events found.');
-    } else {
-      console.log('Upcoming 10 events:');
-      for (var i = 0; i < events.length; i++) {
-        var event = events[i];
-        var start = event.start.dateTime || event.start.date;
-        console.log('%s - %s', start, event.summary);
-      }
-    }
-  });
-}
+//  * Lists the next 10 events on the user's primary calendar.
+//  *
+//  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+//  */
+// function postEvent(event,auth) {
+//   var calendar = google.calendar('v3');
+//   calendar.events.insert({
+//     auth: auth,
+//     calendarId: 'primary',
+//     resource: event,
+//   }, function(err, event) {
+//     if (err) {
+//       console.log('There was an error contacting the Calendar service: ' + err);
+//       return;
+//     }
+//     console.log('Event created: %s', event.htmlLink);
+//   });
+// }
+console.log(google.auth.OAuth2);
+
+
+// module.exports = postEvent
