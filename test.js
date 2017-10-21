@@ -2,7 +2,7 @@ const Vision = require('@google-cloud/vision');
 const vision = Vision();
 const fileName = './images/golf.jpg';
 const readText = require('./readText');
-
+let parsed;
 //const gcsPath = `gs://${bucketName}/${fileName}`;
 //vision.textDetection({ source: { imageUri: gcsPath } })
 // function extractEmails (text){
@@ -25,18 +25,19 @@ function textDetect(path){
         resolve(info)
       })
     })
-    RTpromise.then(info=>)
+    RTpromise.then(info=>{
+      parsed = {
+        raw:detections,
+        parsed: info,
+      }
+    })
     // parsed = readText(detections,function(err,info){
     //   if (err) throw err
     //   console.log(info);
     //   return info
     // });
-    console.log(parsed);
     // console.log(detections);
-    return {
-      raw:detections,
-      parsed: parsed,
-    };
+    return parsed
   })
   .catch((err) => {
     console.error('ERROR:', err);
