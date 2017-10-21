@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Image, View } from 'react-native';
 import { ImagePicker } from 'expo';
-
+// import processor from '../processor';
 export default class ImagePickerExample extends React.Component {
   state = {
     image: null,
@@ -18,10 +18,22 @@ export default class ImagePickerExample extends React.Component {
         />
         {image &&
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+          {
+            (this.state.image)?
+            <Button
+              title="Turn into event"
+              onPress={this.submit.bind(this)}
+            />
+            :<View/>}
       </View>
     );
   }
-
+  submit() {
+    console.log(this.state.image);
+    // processor(this.state.image).then(a=>{
+    //   console.log(a);
+    // })
+  }
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
