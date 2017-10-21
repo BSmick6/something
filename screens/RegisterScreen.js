@@ -28,7 +28,8 @@ class RegisterScreen extends React.Component {
     title: 'Register'
   };
   postLogin() {
-    return fetch(`${domain}/register`, {
+    console.log(this.state);
+    fetch(`${domain}/register`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -39,19 +40,18 @@ class RegisterScreen extends React.Component {
         })
       })
       .then((response) => {
-          console.log('RESPONSE', response)
-          this.props.navigation.navigate('Login');
-          response.json()
+          console.log('RESPONSE', response);
+          return response.json()
       })
       .then((responseJson) => {
         /* do something with responseJson and go back to the Login view but
          * make sure to check for responseJson.success! */
-        console.log('responseJson',responseJson);
+        console.log('responseJson', responseJson);
         if (responseJson.success === true) {
-          console.log('IT WAS TRUE')
+          console.log('IT WAS TRUE');
           this.props.navigation.navigate('Login');
         } else {
-          alert('invalid')
+          alert('invalid');
         }
         console.log('responseJson user',responseJson.user);
         console.log('responseJson success',responseJson.success);
@@ -74,7 +74,7 @@ class RegisterScreen extends React.Component {
           placeholder = "Password"
           secureTextEntry={true}
           onChangeText={(text) => this.setState({password: text})} />
-        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
+        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => this.postLogin() }>
           <Text style={styles.buttonLabel}>Register button</Text>
         </TouchableOpacity>
       </View>
