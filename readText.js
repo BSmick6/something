@@ -1,8 +1,10 @@
 var request = require("request");
 // const test1 = "Please come see Betsy for $5 jump through a ring of fire! Thursay the 18th of January he will attempt this daring feat at 221 7th St, San Francisco! Paul and Ross will also come.";
 
-function readText(text) {
+function readText(textRaw) {
   return new Promise(function(resolve, reject) {
+    const text = textRaw.split('\n').join(' ')
+    console.log(text);
     var options = {
       method: 'POST',
       url: 'http://api.meaningcloud.com/topics-2.0',
@@ -14,7 +16,8 @@ function readText(text) {
         lang: 'en',
         txt: text,
         ilang: 'en',
-        tt: 'etm'
+        tt: 'etm',
+        uw: 'y',
       }
     };
     request(options, function(error, response, body) {
@@ -24,7 +27,8 @@ function readText(text) {
       }
       let info = {};
       if (body.money_expression_list && body.money_expression_list.length !== 0) {
-        const money = body.money_expression_list[0].form;
+        const money = body.money_expression_list.map(obj=>obj.amount_form);
+        // console.log(body.money_expression_list);
         info.money = money;
       }
       if (body.time_expression_list && body.time_expression_list.length !== 0) {
@@ -37,6 +41,7 @@ function readText(text) {
 
       let place = [];
       let people = [];
+      // let phone = [];
       body.entity_list.forEach(obj => {
         if (obj.sementity.type.split('>')[1] === "Location") {
           place.push(obj.form)
@@ -44,6 +49,9 @@ function readText(text) {
         if (obj.sementity.type.split('>')[1] === "Person") {
           people.push(obj.form);
         }
+        // if (obj.sementity.type.split('>')[1] === "phone") {
+        //   phone.push(obj.form);
+        // }
       })
       people = people.filter((p, i) => people[i - 1] !== p);
       place = place.filter((p, i) => place[i - 1] !== p);
@@ -57,6 +65,7 @@ function readText(text) {
       });
       info.people = people;
       info.place = place;
+      // info.phone = place;
       if (text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)) {
         info.email = text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
       }

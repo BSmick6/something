@@ -20,7 +20,7 @@ export default StackNavigator({
   },
   Swiper: {
     screen: SwiperScreen,
-  },
+  }
 }, {
   initialRouteName: 'Home',
   headerMode: 'screen'

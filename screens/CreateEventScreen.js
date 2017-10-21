@@ -11,10 +11,21 @@ import {
   Button,
   Image
 } from 'react-native';
+import { connect } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
 import { ImagePicker, Location, Permissions, MapView } from 'expo';
 const domain = "https://something-horizons.herokuapp.com";
 import styles from '../styles/styles';
+
+const mapStateToProps = (state) => {
+  return{
+    image: state
+  }
+};
+const mapDispatchToProps = (dispatch) => ({
+  updatePhoto: (image) => {dispatch({type: "UPDATE", image: image})}
+});
+
 
 class CreateEventScreen extends React.Component {
   constructor(props) {
@@ -86,5 +97,6 @@ class CreateEventScreen extends React.Component {
     )
   }
 }
+CreateEventScreen = connect(mapStateToProps, mapDispatchToProps)(CreateEventScreen);
 
 export default CreateEventScreen;
