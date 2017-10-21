@@ -21,41 +21,34 @@ class LoginScreen extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      message: ''
+      password: ''
     }
   }
+
   static navigationOptions = {
     title: 'Login'
   };
+
   postLogin() {
   console.log('signing in');
-  return fetch(`${domain}/register`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
-      })
+  return fetch(`${domain}/login`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: this.state.username,
+      password: this.state.password
     })
-    .then((response) => {
-        console.log('RESPONSE', response)
-        this.props.navigation.navigate('Messages');
-        response.json()
-    })
+  })
+    .then((response) => response.json())
     .then((responseJson) => {
-      /* do something with responseJson and go back to the Login view but
-       * make sure to check for responseJson.success! */
-      console.log('responseJson',responseJson);
-      if (responseJson.success === true) {
-        console.log('IT WAS TRUE')
+      if (responseJson.success) {
+        AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
         this.props.navigation.navigate('Messages');
       } else {
-
+        alert('Invalid credentials bruh');
       }
-      console.log(responseJson)
     })
     .catch((err) => {
       /* do something if there was an error with fetching */

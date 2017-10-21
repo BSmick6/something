@@ -1,33 +1,65 @@
-// Imports the Google Cloud client libraries
 const Vision = require('@google-cloud/vision');
-
-// Instantiates clients
 const vision = Vision();
-
-// The name of the bucket where the file resides, e.g. "my-bucket"
-// const bucketName = 'horizons-image-bucket';
-// const rbucketName = 'horizons-text-bucket';
-// The path to the file within the bucket, e.g. "path/to/image.png"
-const fileName = '../../Pictures/event.jpg';
+const fileName = './images/golf.jpg';
+const readText = require('./readText');
 
 //const gcsPath = `gs://${bucketName}/${fileName}`;
-
-// Performs text detection on the gcs file
 //vision.textDetection({ source: { imageUri: gcsPath } })
-
+// function extractEmails (text){
+//   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+// }
+// function extractPhone (text){
+//   return text.match(/(([a-zA-Z0-9._-])+-[a-zA-Z0-9._-]+-[a-zA-Z0-9._-]+)/gi);
+// }
 function textDetect(path){
-  //let text =[];
+  let detections;
   vision.textDetection({source: {filename: path}})
   .then((results) => {
-    const detections = results[0].textAnnotations;
+    detections = results[0].fullTextAnnotation.text;
 
-    console.log(results[0].fullTextAnnotation.text);
-    console.log('Text:');
-    //detections.forEach((text) => console.log(text));
+    // var RTpromise = new Promise(function(resolve,reject) {
+    //   readText(detections,function(err,info){
+    //     if (err) {
+    //       reject(err)
+    //     }
+    //     resolve(info)
+    //   })
+    // })
+    // RTpromise.then(info=>)
+    // parsed = readText(detections,function(err,info){
+    //   if (err) throw err
+    //   console.log(info);
+    //   return info
+    // });
+    console.log(parsed);
+    // console.log(detections);
+    // return {
+    //   raw:detections,
+    //   parsed: parsed,
+    // };
+    return detections
   })
   .catch((err) => {
     console.error('ERROR:', err);
   });
 }
 
-textDetect(fileName);
+
+function logoDetect(path){
+  vision.logoDetection({ source: { filename: path } })
+  .then((results) => {
+    const logos = results[0].logoAnnotations;
+    console.log('Logos:');
+    logos.forEach((logo) => console.log(logo));
+  })
+  .catch((err) => {
+    console.error('ERROR:', err);
+  });
+}
+// logoDetect(fileName);
+const a = textDetect(fileName);
+// console.log("RAW",a.raw);
+// console.log("parsed",a.parsed);
+
+
+module.exports = textDetect
