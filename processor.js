@@ -20,7 +20,7 @@ readImage(fileName)
     return formEvent(info)
   }).then(evt=>{
     //INFO BECOMES EVENT OBJ FOR GOOGLE
-
+    var calendarID = 'primary'; //default calendar
     return sendEvent(evt,calendarID)
   }).catch(err=>{
     console.log("ERR",err);
