@@ -1,6 +1,5 @@
 // Imports the Google Cloud client libraries
 const Vision = require('@google-cloud/vision');
-const EventParser = require('event-parser.js').EventParser;
 // Instantiates clients
 const vision = Vision();
 
