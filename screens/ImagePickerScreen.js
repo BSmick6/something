@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CameraRoll, Button, Image, View } from 'react-native';
-import { ImagePicker } from 'expo';
-<<<<<<< HEAD
+import { Camera, ImagePicker } from 'expo';
 
 const mapStateToProps = (state) => {
   return{
@@ -10,14 +9,10 @@ const mapStateToProps = (state) => {
   }
 };
 const mapDispatchToProps = (dispatch) => ({
-  updatePhoto: (image) => {dispatch(update(image))}
+  updatePhoto: (image) => {dispatch({type: "UPDATE", image: image})}
 });
 
 class ImagePickerExample extends React.Component {
-=======
-import processor from '../processor';
-export default class ImagePickerExample extends React.Component {
->>>>>>> 749a0b7665dfa228a29655cfb114e4ac4aa241e6
   state = {
     image: null,
   };
@@ -33,7 +28,6 @@ export default class ImagePickerExample extends React.Component {
         />
         {image &&
           <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-<<<<<<< HEAD
         <Button
           title="Take a new picture"
           onPress={this._takePhoto} />
@@ -41,27 +35,14 @@ export default class ImagePickerExample extends React.Component {
     );
   }
   _takePhoto = async () => {
-    let result = await CameraRoll.saveToCameraRoll((Expo.ImagePicker.launchCameraAsync({})).uri);
+    let result = await CameraRoll.saveToCameraRoll(Expo.ImagePicker.launchCameraAsync({
+    }));
+    console.log(result);
     if(!result.cancelled){
+        console.log(result);
+      this.props.updatePhoto(result.uri);
       this.setState({image: result.uri});
     }
-=======
-          {
-            (this.state.image)?
-            <Button
-              title="Turn into event"
-              onPress={this.submit.bind(this)}
-            />
-            :<View/>}
-      </View>
-    );
-  }
-  submit() {
-    console.log(this.state.image);
-    processor(this.state.image).then(a=>{
-      console.log(a);
-    })
->>>>>>> 749a0b7665dfa228a29655cfb114e4ac4aa241e6
   }
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

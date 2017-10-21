@@ -2,15 +2,16 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import CreateEventScreen from './CreateEventScreen';
 import ImagePickerScreen from './ImagePickerScreen';
+import Camera from './Camera';
 import Swiper from 'react-native-swiper';
 import styles from '../styles/styles.js';
-import mainReducer from './reducers/mainReducer';
+import reducers from '../reducers/reducer';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 
-const store = createStore(mainReducer);
+const store = createStore(reducers);
 
 const domain = "https://something-horizons.herokuapp.com";
 
@@ -37,10 +38,11 @@ class SwiperScreen extends React.Component {
 
   render() {
     return (
-      <Provider>
+      <Provider store={store}>
         <Swiper>
           <ImagePickerScreen />
           <CreateEventScreen />
+          <Camera />
         </Swiper>
       </Provider>
     )
