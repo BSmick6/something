@@ -27,7 +27,7 @@ class HomeScreen extends React.Component {
     AsyncStorage.getItem('user')
     .then((result) => {
       if(result) {
-        this.props.navigation.navigate('Messages')
+        this.props.navigation.navigate('Swiper')
       } else {
         console.log('no user loser');
       }
@@ -36,17 +36,22 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={ () => {this.press()} }
-          style={[styles.button, styles.buttonBlue]}>
-          <Text style={styles.buttonLabel}>Tap to Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={ () => {this.register()} }
-          style={[styles.button, styles.buttonBlue]}>
-          <Text style={styles.buttonLabel}>Tap to Register</Text>
-        </TouchableOpacity>
+      <View style={styles.containerFull}>
+        <Text style={styles.textBig}>Something</Text>
+        <View>
+          <TouchableOpacity
+            onPress={ () => {this.press()} }
+            style={[styles.button, styles.buttonBlue]}>
+            <Text style={styles.buttonLabel}>Tap to Login</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={ () => {this.register()} }
+            style={[styles.button, styles.buttonBlue]}>
+            <Text style={styles.buttonLabel}>Tap to Register</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }

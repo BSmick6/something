@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     margin: 15,
     height: 40,
     borderColor: '#7a42f4',
-    borderWidth: 1
+    width: 300
   },
   welcome: {
     fontSize: 20,
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     fontWeight: 'bold',
-    fontFamily: 'AvenirNext-Medium'
   },
   button: {
     alignSelf: 'stretch',

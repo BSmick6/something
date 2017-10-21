@@ -44,7 +44,6 @@ class CreateEventScreen extends React.Component {
       })
     })
     .then((response) => {
-        console.log('RESPONSE', response)
         response.json()
     })
     .then((responseJson) => {
