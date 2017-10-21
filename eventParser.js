@@ -8,7 +8,7 @@
  * */
 
 // constructor
-module.exports = function EventParser(config) {
+module.exports = function EventParser(string,config) {
 
   // Default configuration
   var defaults = {
@@ -29,15 +29,15 @@ module.exports = function EventParser(config) {
   };
 
   // Avoid clobbering the window scope
-  if (window === this) {
+  if (window === string) {
     return new EventParser(config);
   }
 
   // checking given configuration
-  this.settings = this.helpers.extend({}, defaults, config);
+  string.settings = string.helpers.extend({}, defaults, config);
 
   // event object template
-  this.eventTemplate = {
+  string.eventTemplate = {
     sourceText: '',
     parsedText: '',
     parsedTitle: '',
@@ -63,7 +63,7 @@ module.exports = function EventParser(config) {
 
   };
 
-  this.sets = {
+  string.sets = {
     weekday: [
       'sunday',
       'monday',
@@ -149,7 +149,7 @@ module.exports = function EventParser(config) {
     timeRelatives: ['afternoon', 'night', 'evening', 'morning']
   };
 
-  this.patterns = {
+  string.patterns = {
 
     recurrenceExpression: /((?:at|on)\s)?(((every|each)\s)?((((sunday|monday|tuesday|wednesday|thursday|friday|saturday)(?:s)?(?:\s)?(?:,|and|&)?\s?){2,})|((january|february|march|april|may|june|july|august|september|october|november|december)(?:\s)?(?:,|and|&)?\s?){2,}))|((every|each)\s(((?:((?:(twenty|thirty(?:-|\s))?(first|second|third|fourth|fifth|sixth|seventh|eighth|nineth|tenth|eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth|seventeenth|eighteenth|nineteenth))|(?:tenth|twentieth|thirtieth))|(\d+)(?:st|nd|rd|th))|next|last|other)?\s)?((sunday|monday|tuesday|wednesday|thursday|friday|saturday)(?:s)?|(january|february|march|april|may|june|july|august|september|october|november|december)|(weekday|weekend|week|month|day|year)))|(dai|week|month|year)ly|weekends|weekdays/gi,
 
@@ -157,8 +157,8 @@ module.exports = function EventParser(config) {
 
     numbers: {
       numerical: /\b(?:(\d+)(st|nd|rd|th)\b)/gi,
-      ordinal: new RegExp('(?:(' + this.sets.number.prefix.join('|') + '(?:-|\\s))?(' + this.sets.number.ordinal.join('|') + '))|' + '(?:tenth|twentieth|thirtieth)' + '', 'gi'),
-      normal: new RegExp('((?:(?:(?:' + this.sets.number.prefix.join('|') + ')(?:-|\\s))?(' + this.sets.number.normal.join('|') + '))|' + '(?:ten|' + this.sets.number.prefix.join('|') + '))', 'gi')
+      ordinal: new RegExp('(?:(' + string.sets.number.prefix.join('|') + '(?:-|\\s))?(' + string.sets.number.ordinal.join('|') + '))|' + '(?:tenth|twentieth|thirtieth)' + '', 'gi'),
+      normal: new RegExp('((?:(?:(?:' + string.sets.number.prefix.join('|') + ')(?:-|\\s))?(' + string.sets.number.normal.join('|') + '))|' + '(?:ten|' + string.sets.number.prefix.join('|') + '))', 'gi')
     },
     // dates detectors
     dates: {
@@ -175,16 +175,16 @@ module.exports = function EventParser(config) {
       // relative closest dates aliases
       // on friday, on other friday, at monday, at next monday, tomorrow, today, at 2nd tuesday
       relative: {
-        common: /(?:(?:on|at|to)\s)?(?:(next|this|last|after|other|\d(?:st|nd|rd|th)?)\s)?(month|week|year|sunday|monday|tuesday|wednesday|thursday|friday|saturday)|(?:(?:on|at)\s)?(today|tomorrow)/ig,
+        common: /(?:(?:on|at|to)\s)?(?:(next|string|last|after|other|\d(?:st|nd|rd|th)?)\s)?(month|week|year|sunday|monday|tuesday|wednesday|thursday|friday|saturday)|(?:(?:on|at)\s)?(today|tomorrow)/ig,
         dayAfter: /(\bday\safter\stomorrow\b)/ig, in: /(?:in\b\s(?:a\s)?(couple|(?:\d+)|(?:\b(?:twenty|thirty(?:-|\s))?\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen))|(?:twenty|thirty))?(?:\s)?(?:of\s)?(day|week|month|year)(?:s)?)/ig
       },
 
       // date ranges
       // from - to, in between
       ranges: {
-        formatted: new RegExp('(?:' + this.sets.range.prefix.join('|') + ')?(?:\\s)?(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)(?:(?:\\s)?(' + this.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)', 'gi'),
-        from: new RegExp('(?:' + this.sets.range.prefix.join('|') + ')?(?:\\s)?[^\/\\d+](\\d{1,2})(?:(?:\\s)?(' + this.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)', 'gi'),
-        to: new RegExp('(?:' + this.sets.range.prefix.join('|') + ')?(?:\\s)?(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)(?:(?:\\s)?(' + this.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}(?!\\/))', 'gi'),
+        formatted: new RegExp('(?:' + string.sets.range.prefix.join('|') + ')?(?:\\s)?(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)(?:(?:\\s)?(' + string.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)', 'gi'),
+        from: new RegExp('(?:' + string.sets.range.prefix.join('|') + ')?(?:\\s)?[^\/\\d+](\\d{1,2})(?:(?:\\s)?(' + string.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)', 'gi'),
+        to: new RegExp('(?:' + string.sets.range.prefix.join('|') + ')?(?:\\s)?(\\d{1,2}\\/\\d{1,2}(?:\\/\\d{2,4})?)(?:(?:\\s)?(' + string.sets.range.splitter.join('|') + ')(?:\\s)?)(\\d{1,2}(?!\\/))', 'gi'),
         between: /\s/ig
       }
     },
@@ -193,9 +193,9 @@ module.exports = function EventParser(config) {
       formatted: /((?:(?:at|on)\s)?\b(?:(?:[01]?[0-9]|2[0-3])(?::)([0-5][0-9]))\b)/gi,
       singleInstances: /(?:(?:at|on)?\b(?:(1[012]|0?[1-9])(?:(?::)([0-5][0-9]))(?:(?:\s)?(am|pm))|(1[012]|0?[1-9])(?:\s)?(am|pm)|([01]?[0-9]|2[0-3])(?::)([0-5][0-9]))\b)/gi,
 
-      fullRanges: new RegExp('((?:' + this.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + this.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?::)(\\d{2}))', 'gi'),
-      partialX2Time: new RegExp('((?:' + this.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + this.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?:\\:)(\\d{2}))', 'gi'),
-      partialTime2X: new RegExp('((?:' + this.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + this.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?:\\:)(\\d{2}))', 'gi')
+      fullRanges: new RegExp('((?:' + string.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + string.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?::)(\\d{2}))', 'gi'),
+      partialX2Time: new RegExp('((?:' + string.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + string.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?:\\:)(\\d{2}))', 'gi'),
+      partialTime2X: new RegExp('((?:' + string.sets.range.prefix.join('|') + '\\s)?(?:\\d{1,2})(?::)(\\d{2}))\\s?(?:' + string.sets.range.splitter.join('|') + ')\\s?((\\d{1,2})(?:\\:)(\\d{2}))', 'gi')
     },
 
     // Nicers
@@ -308,21 +308,21 @@ module.exports = function EventParser(config) {
     ]
   };
 
-  //this.now = undefined;
+  //string.now = undefined;
 
   // using one EventParser instance
-  if (!(this instanceof EventParser)) {
-    return new EventParser(this.settings);
+  if (!(string instanceof EventParser)) {
+    return new EventParser(string.settings);
   }
 
-  return this;
+  return string;
 }
 
 EventParser.prototype = {
 
   getNow: function() {
-    return (this.now)
-      ? new Date(this.now.getTime())
+    return (string.now)
+      ? new Date(string.now.getTime())
       : new Date();
   },
 
@@ -333,40 +333,40 @@ EventParser.prototype = {
       i;
 
     // Complete uncompleted, shortened words, parts and abbrreveations.
-    for (i = 0; i < this.patterns.nicers.length; i++) {
-      source = source.replace(this.patterns.nicers[i][0], this.patterns.nicers[i][1]);
+    for (i = 0; i < string.patterns.nicers.length; i++) {
+      source = source.replace(string.patterns.nicers[i][0], string.patterns.nicers[i][1]);
     }
 
     //convert holidays
-    for (i = 0; i < this.patterns.holidays.length; i++) {
-      source = source.replace(this.patterns.holidays[i][0], this.patterns.holidays[i][1]);
+    for (i = 0; i < string.patterns.holidays.length; i++) {
+      source = source.replace(string.patterns.holidays[i][0], string.patterns.holidays[i][1]);
     }
 
     //normalise numbers
 
     // digitals
-    this.patterns.numbers.numerical.lastIndex = 0;
-    while (matches = this.patterns.numbers.numerical.exec(source)) {
-      match = matches.filter(this.helpers.isUndefined);
-      this.patterns.numbers.numerical.lastIndex = matches.index + 1;
+    string.patterns.numbers.numerical.lastIndex = 0;
+    while (matches = string.patterns.numbers.numerical.exec(source)) {
+      match = matches.filter(string.helpers.isUndefined);
+      string.patterns.numbers.numerical.lastIndex = matches.index + 1;
 
       // don't believe anyone, just reconvert it.
-      source = source.replace(match[0], this.helpers.getOrdinal(match[1]));
+      source = source.replace(match[0], string.helpers.getOrdinal(match[1]));
     }
 
     // not ordinal literal numbers
-    this.patterns.numbers.normal.lastIndex = 0;
-    while (matches = this.patterns.numbers.normal.exec(source)) {
-      match = matches.filter(this.helpers.isUndefined);
-      this.patterns.numbers.normal.lastIndex = matches.index + 1;
+    string.patterns.numbers.normal.lastIndex = 0;
+    while (matches = string.patterns.numbers.normal.exec(source)) {
+      match = matches.filter(string.helpers.isUndefined);
+      string.patterns.numbers.normal.lastIndex = matches.index + 1;
     }
 
     // ordinal literal numbers
-    this.patterns.numbers.ordinal.lastIndex = 0;
-    while (matches = this.patterns.numbers.ordinal.exec(source)) {
+    string.patterns.numbers.ordinal.lastIndex = 0;
+    while (matches = string.patterns.numbers.ordinal.exec(source)) {
 
-      match = matches.filter(this.helpers.isUndefined);
-      this.patterns.numbers.ordinal.lastIndex = matches.index + 1;
+      match = matches.filter(string.helpers.isUndefined);
+      string.patterns.numbers.ordinal.lastIndex = matches.index + 1;
       formattedString = '';
       if (match.length === 2) {
         // 10, 20, 30?
@@ -383,10 +383,10 @@ EventParser.prototype = {
               break;
           }
         } else {
-          formattedString = this.helpers.getOrdinal(this.sets.number.ordinal.indexOf(match[1].toLowerCase()) + 1);
+          formattedString = string.helpers.getOrdinal(string.sets.number.ordinal.indexOf(match[1].toLowerCase()) + 1);
         }
       } else if (match.length === 3) {
-        formattedString = (this.sets.number.prefix.indexOf(match[1].toLowerCase()) + 2) + this.helpers.getOrdinal(this.sets.number.ordinal.indexOf(match[2].toLowerCase()) + 1);
+        formattedString = (string.sets.number.prefix.indexOf(match[1].toLowerCase()) + 2) + string.helpers.getOrdinal(string.sets.number.ordinal.indexOf(match[2].toLowerCase()) + 1);
       }
 
       if (formattedString !== '') {
@@ -406,11 +406,11 @@ EventParser.prototype = {
 
     // get recurrencies
     // todo: currently gets only one recurrence. That's pity.
-    while (matches = this.patterns.recurrenceExpression.exec(event.parsedText)) {
+    while (matches = string.patterns.recurrenceExpression.exec(event.parsedText)) {
 
-      match = matches.filter(this.helpers.isUndefined);
+      match = matches.filter(string.helpers.isUndefined);
 
-      this.patterns.recurrenceExpression.lastIndex = matches.index + 1;
+      string.patterns.recurrenceExpression.lastIndex = matches.index + 1;
 
       event.isRecurrent = true;
       event.parsedText = event.parsedText.replace(match[0], '');
@@ -426,7 +426,7 @@ EventParser.prototype = {
     } else {
 
       //get all of exceptions for recurrencies
-      while (match = this.patterns.recurrenceExcepts.exec(event.parsedText)) {
+      while (match = string.patterns.recurrenceExcepts.exec(event.parsedText)) {
         event.recurrenceExceptionsText = match[0];
         event.parsedText = event.parsedText.replace(event.recurrenceExceptionsText, '');
       }
@@ -436,10 +436,10 @@ EventParser.prototype = {
 				 event.until = "";
 				 event.recurrenceText = event.recurrenceText.replace(match[0], '');
 				 // weekdays
-				 re = new RegExp(this.sets.weekday.join('|'), 'ig');
+				 re = new RegExp(string.sets.weekday.join('|'), 'ig');
 				 while (match = re.exec(event.recurrenceText)) {
 				 event.frequency = 'weekly';
-				 event.recurrentAttr.push({day: this.sets.weekday.indexOf(match[0])})
+				 event.recurrentAttr.push({day: string.sets.weekday.indexOf(match[0])})
 				 }
 				 } else {
 				 }*/
@@ -466,12 +466,12 @@ EventParser.prototype = {
         case 'next':
           hasNext = true;
           break;
-        case 'this':
+        case 'string':
           hasSelf = true;
           break;
         default:
           // relative word suffix not found.
-          if (found = matches[1].match(this.patterns.numbers.numerical)) {
+          if (found = matches[1].match(string.patterns.numbers.numerical)) {
             subjectIndex = 2;
             hasNumber = parseInt(found[0]);
           }
@@ -493,10 +493,10 @@ EventParser.prototype = {
       month,
       year;
 
-    this.patterns.dates.formatted.lastIndex = 0;
-    while (matches = this.patterns.dates.formatted.exec(event.parsedText)) {
+    string.patterns.dates.formatted.lastIndex = 0;
+    while (matches = string.patterns.dates.formatted.exec(event.parsedText)) {
 
-      match = matches.filter(this.helpers.isUndefined);
+      match = matches.filter(string.helpers.isUndefined);
 
       date = (parseInt(match[2]) <= 31 && parseInt(match[2]) >= 1)
         ? parseInt(match[2])
@@ -516,7 +516,7 @@ EventParser.prototype = {
             : parseInt(match[3]) + 1900)
         : null);
 
-      if (date && month && this.helpers.isValidDate(match[0])) {
+      if (date && month && string.helpers.isValidDate(match[0])) {
 
         event.hasValidDate = true;
 
@@ -526,7 +526,7 @@ EventParser.prototype = {
           index: matches.index,
           match: formattedString,
           formattedDate: formattedString,
-          hasYear: this.helpers.isNumeric(year),
+          hasYear: string.helpers.isNumeric(year),
           date: {
             month: month,
             date: date,
@@ -534,23 +534,23 @@ EventParser.prototype = {
           }
         });
 
-        if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-          this.settings.onDateParsed(event.parsedDates);
+        if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+          string.settings.onDateParsed(event.parsedDates);
         }
       }
     }
 
     // M D Y
-    this.patterns.dates.mdyStrings.lastIndex = 0;
-    while (matches = this.patterns.dates.mdyStrings.exec(event.parsedText)) {
+    string.patterns.dates.mdyStrings.lastIndex = 0;
+    while (matches = string.patterns.dates.mdyStrings.exec(event.parsedText)) {
 
-      match = matches.filter(this.helpers.isUndefined);
+      match = matches.filter(string.helpers.isUndefined);
 
       date = (parseInt(match[2]) <= 31 && parseInt(match[2]) >= 1)
         ? parseInt(match[2])
         : null;
-      month = (this.sets.month.indexOf(match[1]) >= 0)
-        ? this.sets.month.indexOf(match[1]) + 1
+      month = (string.sets.month.indexOf(match[1]) >= 0)
+        ? string.sets.month.indexOf(match[1]) + 1
         : null;
       year = ((match.length === 4)
         ? parseInt(match[3])
@@ -559,11 +559,11 @@ EventParser.prototype = {
         ? '/' + year
         : '');
 
-      this.patterns.dates.mdyStrings.lastIndex = matches.index + 1;
+      string.patterns.dates.mdyStrings.lastIndex = matches.index + 1;
 
       // changing to MM/DD || MM/DD/YYYY
 
-      if (date && month && this.helpers.isValidDate(formattedString)) {
+      if (date && month && string.helpers.isValidDate(formattedString)) {
 
         event.hasValidDate = true;
         event.parsedText = event.parsedText.replace(match[0], formattedString);
@@ -571,7 +571,7 @@ EventParser.prototype = {
           index: matches.index,
           match: match[0],
           formattedDate: formattedString,
-          hasYear: this.helpers.isNumeric(year),
+          hasYear: string.helpers.isNumeric(year),
           date: {
             month: month,
             date: date,
@@ -579,25 +579,25 @@ EventParser.prototype = {
           }
         });
 
-        if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-          this.settings.onDateParsed(event.parsedDates);
+        if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+          string.settings.onDateParsed(event.parsedDates);
         }
       }
     }
 
     // D M Y
-    this.patterns.dates.dmyStrings.lastIndex = 0;
-    while (matches = this.patterns.dates.dmyStrings.exec(event.parsedText)) {
+    string.patterns.dates.dmyStrings.lastIndex = 0;
+    while (matches = string.patterns.dates.dmyStrings.exec(event.parsedText)) {
 
       event.isValidDate = true;
-      match = matches.filter(this.helpers.isUndefined);
-      this.patterns.dates.dmyStrings.lastIndex = matches.index + 1;
+      match = matches.filter(string.helpers.isUndefined);
+      string.patterns.dates.dmyStrings.lastIndex = matches.index + 1;
 
       date = (parseInt(match[1]) <= 31 && parseInt(match[1]) >= 1)
         ? parseInt(match[1])
         : null;
-      month = (this.sets.month.indexOf(match[2]) >= 0)
-        ? this.sets.month.indexOf(match[2]) + 1
+      month = (string.sets.month.indexOf(match[2]) >= 0)
+        ? string.sets.month.indexOf(match[2]) + 1
         : null;
       year = ((match.length === 4)
         ? parseInt(match[3])
@@ -607,7 +607,7 @@ EventParser.prototype = {
         ? '/' + year
         : '');
 
-      if (date && month && this.helpers.isValidDate(formattedString)) {
+      if (date && month && string.helpers.isValidDate(formattedString)) {
 
         event.hasValidDate = true;
 
@@ -617,7 +617,7 @@ EventParser.prototype = {
           index: matches.index,
           match: match[0],
           formattedDate: formattedString,
-          hasYear: this.helpers.isNumeric(year),
+          hasYear: string.helpers.isNumeric(year),
           date: {
             month: month,
             date: date,
@@ -625,8 +625,8 @@ EventParser.prototype = {
           }
         });
 
-        if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-          this.settings.onDateParsed(event.parsedDates);
+        if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+          string.settings.onDateParsed(event.parsedDates);
         }
       }
     }
@@ -652,12 +652,12 @@ EventParser.prototype = {
       matches,
       formattedString;
 
-    while (matches = this.patterns.times.singleInstances.exec(event.parsedText)) {
-      //if (this.patterns.dates.singleInstances.lastIndex) console.log(this.patterns.dates.singleInstances.lastIndex);
+    while (matches = string.patterns.times.singleInstances.exec(event.parsedText)) {
+      //if (string.patterns.dates.singleInstances.lastIndex) console.log(string.patterns.dates.singleInstances.lastIndex);
 
       event.isValidDate = true;
 
-      match = matches.filter(this.helpers.isUndefined);
+      match = matches.filter(string.helpers.isUndefined);
       if (match.length >= 3) {
         if (match[match.length - 1].toLowerCase() === 'am' || match[match.length - 1].toLowerCase() === 'pm') {
           // might unecessary till regex updates
@@ -681,7 +681,7 @@ EventParser.prototype = {
           minutes = parseInt(match[2]);
         }
 
-        formattedString = this.helpers.padNumberWithZeroes(hours, 2) + ':' + this.helpers.padNumberWithZeroes(minutes, 2);
+        formattedString = string.helpers.padNumberWithZeroes(hours, 2) + ':' + string.helpers.padNumberWithZeroes(minutes, 2);
         event.parsedText = event.parsedText.replace(match[0], formattedString);
 
         event.parsedTimes.push({
@@ -695,8 +695,8 @@ EventParser.prototype = {
           }
         });
 
-        if (this.settings.onTimeParsed && typeof this.settings.onTimeParsed === 'function') {
-          this.settings.onTimeParsed(event.parsedTimes);
+        if (string.settings.onTimeParsed && typeof string.settings.onTimeParsed === 'function') {
+          string.settings.onTimeParsed(event.parsedTimes);
         }
       }
     }
@@ -712,10 +712,10 @@ EventParser.prototype = {
       endDate,
       formattedString,
       relPrefix;
-    var now = this.getNow();
+    var now = string.getNow();
 
     // Day after tomorrow (should be only one mention, ok?)
-    if (matches = event.parsedText.match(this.patterns.dates.relative.dayAfter)) {
+    if (matches = event.parsedText.match(string.patterns.dates.relative.dayAfter)) {
 
       targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2);
       formattedString = (targetDate.getMonth() + 1) + '/' + targetDate.getDate() + '/' + targetDate.getFullYear();
@@ -735,14 +735,14 @@ EventParser.prototype = {
     }
 
     // in x days|weeks|month
-    while (matches = this.patterns.dates.relative. in.exec(event.parsedText)) {
+    while (matches = string.patterns.dates.relative. in.exec(event.parsedText)) {
 
-      match = matches.filter(this.helpers.isUndefined);
+      match = matches.filter(string.helpers.isUndefined);
 
       if (match.length === 2) {
-        targetDate = this.helpers.getDateShifted(now, match[1], 1);
+        targetDate = string.helpers.getDateShifted(now, match[1], 1);
       } else if (match.length === 3) {
-        targetDate = this.helpers.getDateShifted(now, match[2], match[1]);
+        targetDate = string.helpers.getDateShifted(now, match[2], match[1]);
       }
 
       formattedString = targetDate.getMonth() + '/' + targetDate.getDate() + '/' + targetDate.getFullYear();
@@ -759,34 +759,34 @@ EventParser.prototype = {
         }
       });
 
-      if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-        this.settings.onDateParsed(event.parsedDates);
+      if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+        string.settings.onDateParsed(event.parsedDates);
       }
     }
 
     // Convert common relative dates given
-    while (matches = this.patterns.dates.relative.common.exec(event.parsedText)) {
+    while (matches = string.patterns.dates.relative.common.exec(event.parsedText)) {
 
       formattedString = '';
       event.isValidDate = true;
 
-      match = matches.filter(this.helpers.isUndefined);
-      this.patterns.dates.relative.common.lastIndex = matches.index + 1;
+      match = matches.filter(string.helpers.isUndefined);
+      string.patterns.dates.relative.common.lastIndex = matches.index + 1;
 
-      relPrefix = this.parseRelPrefix(match);
-      //relSuffix = this.parseRelSuffix(match);
+      relPrefix = string.parseRelPrefix(match);
+      //relSuffix = string.parseRelSuffix(match);
 
       // todo: if relative date relates to today, should check time. if it already passed, check next relative.
       // todo: DONT USE DATE OBJECT. Dates can be uncomplete if year not specified.
 
-      if (this.sets.weekday.indexOf(match[relPrefix.subjectIndex]) >= 0) {
+      if (string.sets.weekday.indexOf(match[relPrefix.subjectIndex]) >= 0) {
         // weekdays
-        var subjectDay = this.sets.weekday.indexOf(match[relPrefix.subjectIndex]);
-        targetDate = this.helpers.getNextWeekday(now, subjectDay, relPrefix);
-      } else if (this.sets.month.indexOf(match[relPrefix.subjectIndex]) > 0) {
+        var subjectDay = string.sets.weekday.indexOf(match[relPrefix.subjectIndex]);
+        targetDate = string.helpers.getNextWeekday(now, subjectDay, relPrefix);
+      } else if (string.sets.month.indexOf(match[relPrefix.subjectIndex]) > 0) {
         // months
-        var subjectMonth = this.sets.month.indexOf(match[relPrefix.subjectIndex]) + 1;
-        targetDate = this.helpers.getNextMonth(now, subjectMonth, relPrefix);
+        var subjectMonth = string.sets.month.indexOf(match[relPrefix.subjectIndex]) + 1;
+        targetDate = string.helpers.getNextMonth(now, subjectMonth, relPrefix);
       } else {
 
         // single
@@ -818,11 +818,11 @@ EventParser.prototype = {
             if (relPrefix.next) {
               targetDate = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0);
               endDate = new Date(now.getFullYear(), now.getMonth() + 2, 0, 0, 0, 0);
-              this.patterns.dates.relative.common.lastIndex = 0;
+              string.patterns.dates.relative.common.lastIndex = 0;
             } else if (relPrefix.self) {
               targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
               endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 0, 0, 0);
-              this.patterns.dates.relative.common.lastIndex = 0;
+              string.patterns.dates.relative.common.lastIndex = 0;
             }
             break;
           case 'year':
@@ -871,8 +871,8 @@ EventParser.prototype = {
           });
         }
 
-        if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-          this.settings.onDateParsed(event.parsedDates);
+        if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+          string.settings.onDateParsed(event.parsedDates);
         }
 
       }
@@ -893,11 +893,11 @@ EventParser.prototype = {
       month,
       year;
 
-    while (matches = this.patterns.dates.ranges.from.exec(event.parsedText)) {
+    while (matches = string.patterns.dates.ranges.from.exec(event.parsedText)) {
 
       if (event.parsedDates.length === 1) {
 
-        match = matches.filter(this.helpers.isUndefined);
+        match = matches.filter(string.helpers.isUndefined);
 
         date = (parseInt(match[1]) <= 31 && parseInt(match[1]) >= 1)
           ? parseInt(match[1])
@@ -910,7 +910,7 @@ EventParser.prototype = {
         formattedString = month + '/' + date + ((year)
           ? '/' + year
           : '');
-        if (date && month && this.helpers.isValidDate(formattedString)) {
+        if (date && month && string.helpers.isValidDate(formattedString)) {
           replacement = month + '/' + date + ((year)
             ? '/' + year
             : '') + ' ' + match[2] + ' ' + match[3];
@@ -930,21 +930,21 @@ EventParser.prototype = {
             }
           });
 
-          if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-            this.settings.onDateParsed(event.parsedDates);
+          if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+            string.settings.onDateParsed(event.parsedDates);
           }
 
         }
       } else {
-        // todo: sure this is bad behaviour, i shouldnt relate to stupid logic that there is just one dates were parsed. I should get related date by match index position
+        // todo: sure string is bad behaviour, i shouldnt relate to stupid logic that there is just one dates were parsed. I should get related date by match index position
         console.error('Cannot comeplete range. There is no dates detected or there more than 1 date in cache.')
       }
     }
 
-    while (matches = this.patterns.dates.ranges.to.exec(event.parsedText)) {
+    while (matches = string.patterns.dates.ranges.to.exec(event.parsedText)) {
 
       if (event.parsedDates.length === 1) {
-        match = matches.filter(this.helpers.isUndefined);
+        match = matches.filter(string.helpers.isUndefined);
 
         date = (parseInt(match[3]) <= 31 && parseInt(match[3]) >= 1)
           ? parseInt(match[3])
@@ -957,7 +957,7 @@ EventParser.prototype = {
         formattedString = month + '/' + date + ((year)
           ? '/' + year
           : '');
-        if (date && month && this.helpers.isValidDate(formattedString)) {
+        if (date && month && string.helpers.isValidDate(formattedString)) {
           replacement = match[1] + ' ' + match[2] + ' ' + event.parsedDates[0].date.month + '/' + match[3] + ((event.parsedDates[0].hasYear)
             ? '/' + event.parsedDates[0].date.year
             : '');
@@ -977,11 +977,11 @@ EventParser.prototype = {
             year: year
           }
         });
-        if (this.settings.onDateParsed && typeof this.settings.onDateParsed === 'function') {
-          this.settings.onDateParsed(event.parsedDates);
+        if (string.settings.onDateParsed && typeof string.settings.onDateParsed === 'function') {
+          string.settings.onDateParsed(event.parsedDates);
         }
       } else {
-        // todo: sure this is bad behaviour, i shouldnt relate to stupid logic that there is just one dates were parsed. I should get related date by match index position
+        // todo: sure string is bad behaviour, i shouldnt relate to stupid logic that there is just one dates were parsed. I should get related date by match index position
         console.error('Cannot comeplete range. There is no dates detected or there more than 1 date in cache.')
       }
     }
@@ -995,42 +995,42 @@ EventParser.prototype = {
 
     // store preformatted sting to store date index positions
 
-    var event = JSON.parse(JSON.stringify(this.eventTemplate));
+    var event = JSON.parse(JSON.stringify(string.eventTemplate));
 
     event.parsedText = source;
-    event.parsedText = this.cleanup(event.parsedText);
+    event.parsedText = string.cleanup(event.parsedText);
     event.preConvertedString = event.parsedText;
     event.parsedTitle = event.parsedText;
 
-    this.now = this.getNow();
-    var now = this.now;
+    string.now = string.getNow();
+    var now = string.now;
 
     // parse and format dates
-    event = this.parseDates(event);
+    event = string.parseDates(event);
 
     // parse and format times
-    event = this.parseTimes(event);
+    event = string.parseTimes(event);
 
     // go get recurrency ant cut it from
-    event = this.parseRecurrent(event);
+    event = string.parseRecurrent(event);
 
     // Convert common relative dates given
-    event = this.parseRelativeDates(event);
+    event = string.parseRelativeDates(event);
 
-    event = this.parseDateRanges(event);
+    event = string.parseDateRanges(event);
 
     //
     // Finalize dates, make ajustements
     // ================================
 
     event.parsedTitle = event.parsedText;
-    event.parsedTitle = event.parsedTitle.replace(this.patterns.dates.ranges.formatted, '');
-    event.parsedTitle = event.parsedTitle.replace(this.patterns.dates.formatted, '');
-    event.parsedTitle = event.parsedTitle.replace(this.patterns.times.formatted, '');
+    event.parsedTitle = event.parsedTitle.replace(string.patterns.dates.ranges.formatted, '');
+    event.parsedTitle = event.parsedTitle.replace(string.patterns.dates.formatted, '');
+    event.parsedTitle = event.parsedTitle.replace(string.patterns.times.formatted, '');
     event.parsedTitle = event.parsedTitle.replace(/ +(?= )/g, '').trim(); // remove multiple spaces
 
     // get parsedDates in order. Incomplete date range parser can makes it following in wrong order.
-    event.parsedDates = event.parsedDates.sort(this.helpers.sortByParsedDates);
+    event.parsedDates = event.parsedDates.sort(string.helpers.sortByParsedDates);
 
     if (!event.startDate) {
 
@@ -1115,16 +1115,16 @@ EventParser.prototype = {
       }
     }
 
-    if (this.settings.onParsed && typeof this.settings.onParsed === 'function') {
-      this.settings.onParsed();
+    if (string.settings.onParsed && typeof string.settings.onParsed === 'function') {
+      string.settings.onParsed();
     }
 
     return {
       title: event.parsedTitle.trim(),
-      startDate: (this.helpers.isDateObject(event.startDate))
+      startDate: (string.helpers.isDateObject(event.startDate))
         ? new Date(event.startDate)
         : undefined,
-      endDate: (this.helpers.isDateObject(event.endDate))
+      endDate: (string.helpers.isDateObject(event.endDate))
         ? new Date(event.endDate)
         : undefined,
       allDay: event.allDay,
@@ -1172,11 +1172,11 @@ EventParser.prototype = {
     },
 
     strToNumber: function(string) {
-      var re = this.sets.number;
-      if (this.patterns.numbers.normal.test(string)) {
+      var re = string.sets.number;
+      if (string.patterns.numbers.normal.test(string)) {
         var parts,
           number;
-        //var matches = this.patterns.numbers.normal.exec(string);
+        //var matches = string.patterns.numbers.normal.exec(string);
 
         parts = string.split(/\s|-/g);
 
@@ -1206,7 +1206,7 @@ EventParser.prototype = {
             amount = 2;
             break;
           default:
-            amount = this.helpers.strToNumber(amount);
+            amount = string.helpers.strToNumber(amount);
             break;
         }
 
@@ -1231,12 +1231,12 @@ EventParser.prototype = {
 
     getNextMonth: function(dt, targetMonth, relativeStates) {
 
-      dt = dt || this.now || new Date();
+      dt = dt || string.now || new Date();
       var currentMonth = dt.getMonth();
       var targetDate;
 
       targetMonth = (typeof targetMonth === 'string' && isNaN(parseInt(targetMonth)))
-        ? this.sets.month.indexOf(targetMonth.toLowerCase())
+        ? string.sets.month.indexOf(targetMonth.toLowerCase())
         : parseInt(targetMonth);
 
       targetDate = (targetMonth <= currentMonth)
@@ -1254,11 +1254,11 @@ EventParser.prototype = {
 
     getNextWeekday: function(dt, targetWeekday, relativeStates) {
 
-      dt = dt || this.now || new Date();
+      dt = dt || string.now || new Date();
       var currentWeekday = dt.getDay();
 
       targetWeekday = (typeof targetWeekday === 'string' && isNaN(parseInt(targetWeekday)))
-        ? this.sets.weekday.indexOf(targetWeekday.toLowerCase())
+        ? string.sets.weekday.indexOf(targetWeekday.toLowerCase())
         : parseInt(targetWeekday);
 
       var daysUntilNext = targetWeekday - currentWeekday + ((currentWeekday <= targetWeekday)
