@@ -45,7 +45,7 @@ class LoginScreen extends React.Component {
     .then((responseJson) => {
       if (responseJson.success) {
         AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
-        this.props.navigation.navigate('Messages');
+        this.props.navigation.navigate('Events');
       } else {
         alert('Invalid credentials bruh');
       }
