@@ -31,6 +31,7 @@ class LoginScreen extends React.Component {
 
   postLogin() {
   console.log('signing in');
+  this.props.navigation.navigate('Swiper')
   return fetch(`${domain}/login`, {
     method: 'POST',
     headers: {
