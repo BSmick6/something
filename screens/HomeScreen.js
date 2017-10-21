@@ -22,7 +22,31 @@ class HomeScreen extends React.Component {
   register() {
     this.props.navigation.navigate('Register');
   }
-
+  google(){
+    // this.props.navigation.navigate('Swiper');
+    // return fetch(`${domain}/auth/google`, {
+    //   method: 'GET',
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     username: ,
+    //   })
+    // })
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     if (responseJson.success) {
+    //       AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
+    //       this.props.navigation.navigate('Swiper');
+    //     } else {
+    //       alert('Invalid credentials bruh');
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     /* do something if there was an error with fetching */
+    //     console.log('it errored', err)
+    //   });
+  }
   componentWillMount() {
     AsyncStorage.getItem('user')
     .then((result) => {
@@ -50,6 +74,13 @@ class HomeScreen extends React.Component {
             onPress={ () => {this.register()} }
             style={[styles.button, styles.buttonBlue]}>
             <Text style={styles.buttonLabel}>Tap to Register</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={ () => {this.google()} }
+            style={[styles.button, styles.buttonBlue]}>
+            <Text style={styles.buttonLabel}>Tap to login with Google</Text>
           </TouchableOpacity>
         </View>
       </View>
