@@ -3,8 +3,5 @@ node_modules/**/*
 npm-debug.*
 env.sh
 My First Project-4f4f6bb5ec0d.json
-<<<<<<< HEAD
-=======
 node_modules/
->>>>>>> 4c3c6d2ed4c0fa4386dee43e588fb499e3fbfb54
 client_secret.json

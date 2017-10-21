@@ -11,10 +11,7 @@
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
     "expo": "^22.0.0",
-<<<<<<< HEAD
     "connect": "2.x",
-=======
->>>>>>> 4c3c6d2ed4c0fa4386dee43e588fb499e3fbfb54
     "google-auth-library": "^0.11.0",
     "googleapis": "^22.2.0",
     "parse-messy-schedule": "^2.0.3",
