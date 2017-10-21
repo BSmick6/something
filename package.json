@@ -10,25 +10,13 @@
     "@google-cloud/storage": "^1.4.0",
     "@google-cloud/translate": "^1.0.0",
     "@google-cloud/vision": "^0.12.0",
-<<<<<<< HEAD
-    "chrono-node": "^1.3.5",
-    "event-parser.js": "^0.1.4",
-=======
->>>>>>> 63c2ef6bb63f3e5a0f8d917539b3b15562014342
     "expo": "^22.0.0",
-<<<<<<< HEAD
-    "parse-address-string": "0.0.3",
-=======
->>>>>>> c9a481d8d951a5ce3dc65ebff71cffbf7d9a1b6b
+    "parse-messy-schedule": "^2.0.3",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "react": "16.0.0-beta.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.1.tar.gz",
-<<<<<<< HEAD
-    "react-navigation": "^1.0.0-beta.11",
-=======
     "react-navigation": "^1.0.0-beta.15",
->>>>>>> c9a481d8d951a5ce3dc65ebff71cffbf7d9a1b6b
     "safe-buffer": "^5.1.1"
   },
   "scripts": {

@@ -21,14 +21,15 @@ class LoginScreen extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      message: ''
+      password: ''
     }
   }
+
   static navigationOptions = {
     title: 'Login'
   };
-  postSignin() {
+
+  postLogin() {
   console.log('signing in');
   return fetch(`${domain}/login`, {
     method: 'POST',
@@ -42,18 +43,18 @@ class LoginScreen extends React.Component {
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson.success === true) {
-        this.props.navigation.navigate('Users')
+      if (responseJson.success) {
+        AsyncStorage.setItem('user', JSON.stringify(responseJson.user));
+        this.props.navigation.navigate('Messages');
       } else {
-        alert('invalid')
+        alert('Invalid credentials bruh');
       }
-      console.log(responseJson)
     })
     .catch((err) => {
+      /* do something if there was an error with fetching */
       console.log('it errored')
     });
   }
-
   render() {
     return (
         <View style={styles.container}>
@@ -67,7 +68,7 @@ class LoginScreen extends React.Component {
             placeholder = "Password"
             secureTextEntry={true}
             onChangeText={(text) => this.setState({password: text})} />
-          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postSignin()} }>
+          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.postLogin()} }>
             <Text style={styles.buttonLabel}>Login</Text>
           </TouchableOpacity>
         </View>
