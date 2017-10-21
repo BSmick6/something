@@ -29,7 +29,10 @@ class EventsScreen extends React.Component {
 
   componentWillMount() {
     fetch(`${domain}/events`)
-    .then((response) => response.json())
+    .then((response) => {
+      console.log('RESPONSE', response);
+      return response.json()
+    })
     .then((responseJson) => {
       if (responseJson.success === true) {
         console.log('RESPONSE JSON events', responseJson);

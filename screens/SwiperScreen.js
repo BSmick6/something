@@ -2,12 +2,9 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import CreateEventScreen from './CreateEventScreen';
 import ImagePickerScreen from './ImagePickerScreen';
-<<<<<<< HEAD
-import CameraScreen from './CameraScreen';
+// import CameraScreen from './CameraScreen';
 import EventsScreen from './EventsScreen';
-=======
 import Camera from './Camera';
->>>>>>> 8cc04a7c6bbfc633d5312ba3bcbf9608aa8dce13
 import Swiper from 'react-native-swiper';
 import styles from '../styles/styles.js';
 import reducers from '../reducers/reducer';
@@ -43,22 +40,14 @@ class SwiperScreen extends React.Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <Swiper style={styles.container} showsPagination={false}>
-        <CreateEventScreen />
-        <EventsScreen />
-        <ImagePickerScreen />
-        <CameraScreen />
-      </Swiper>
-=======
       <Provider store={store}>
         <Swiper>
+          <EventsScreen />
           <ImagePickerScreen />
           <CreateEventScreen />
           <Camera />
         </Swiper>
       </Provider>
->>>>>>> 8cc04a7c6bbfc633d5312ba3bcbf9608aa8dce13
     )
   }
 }
