@@ -1,27 +1,29 @@
 const readText = require('./readText');
 const readImage = require('./readImage');
 const formEvent = require('./formEvent');
-const fileName = './images/vevo.jpg';
+const fileName1 = './test-images/poster1.jpg';
+const fileName2 = './test-images/poster2.jpg';
+const fileName3 = './test-images/poster3.jpg';
+const fileName4 = './test-images/poster4.jpg';
 
-const test1 = { money: 'SHINE $65 per person Hole prizes',
-  time:
-   [ 'Every SATURDAY for 5 weeks starting JUNE 1, 2013',
-     'MAY 11, 2013'],
-  people: [ 'Nevaeh', 'Glen Carin', 'Green', 'Nicole' ],
-  place: [ 'Wisconsin' ],
-  email: [ 'Nicole@projectsweetpeas.com' ],
-  phone: [ '715-584-0050' ] };
-
-readImage(fileName)
+//
+// readImage(fileName1)
+//   .then(txt=>readText(txt))
+//   .then(info=>console.log("1",info,'\n\n\n')).catch(err=>{
+//     console.log("ERR",err);
+//   });
+// readImage(fileName2)
+//   .then(txt=>readText(txt))
+//   .then(info=>console.log("2",info,'\n\n\n')).catch(err=>{
+//     console.log("ERR",err);
+// //   });
+// readImage(fileName3)
+//   .then(txt=>readText(txt))
+//   .then(info=>console.log("3",info,'\n\n\n')).catch(err=>{
+//     console.log("ERR",err);
+//   });
+readImage(fileName4)
   .then(txt=>readText(txt))
-  .then(info=>formEvent(info))
-  .then(evt=>{
-    console.log(evt);
-  }).catch(err=>{
+  .then(info=>console.log("4",info,'\n\n\n')).catch(err=>{
     console.log("ERR",err);
   });
-// formEvent(test1).then(a=>{
-//   console.log(a);
-// }).catch(err=>{
-//   console.log(err);
-// })
