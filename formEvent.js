@@ -1,7 +1,8 @@
 var chrono = require('chrono-node');
+var parse = require('parse-messy-schedule');
 
 function formEvent(info) {
-  new Promise(resolve, reject) {
+  new Promise(function(resolve, reject) {
     const dates = info.time.map(time=>chrono.parseDate(time));
     const dateStart = dates.reduce((actual,next)=>{
       if (!next) return actual
@@ -11,9 +12,13 @@ function formEvent(info) {
       if (!next) return actual
       return (actual<next)?actual:next
     })
+    const recurrence = parse(info.time.join(', '));
+    if (recurrence._every.every) {
 
+    }
+    console.log("RECURRENCE",recurrence,"\n\n\n\n\n");
     var event = {
-      'summary': title,
+      'summary': "SOME SHIT HERE",
       'location': info.place.join(),
       'description': 'A chance to hear more about Google\'s developer products.',
       'start': {
@@ -45,5 +50,11 @@ function formEvent(info) {
         ]
       }
     };
-  }
+    if (err) {
+      reject(err)
+    }
+    resolve(event)
+  });
 }
+
+module.exports = formEvent

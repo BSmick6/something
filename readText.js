@@ -64,6 +64,7 @@ function readText(text) {
       }
       // console.log(info);
       resolve(info);
+
     });
   })
 }
