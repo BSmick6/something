@@ -1,6 +1,5 @@
-var chrono = require('chrono-node')
 var request = require("request");
-const test1 = "Please come see Betsy for $5 jump through a ring of fire! Thursay the 18th of January he will attempt this daring feat at 221 7th St, San Francisco! Paul and Ross will also come.";
+// const test1 = "Please come see Betsy for $5 jump through a ring of fire! Thursay the 18th of January he will attempt this daring feat at 221 7th St, San Francisco! Paul and Ross will also come.";
 
 function readText(text) {
   return new Promise(function(resolve, reject) {
