@@ -12,30 +12,48 @@ export default class CameraExample extends React.Component {
     this.setState({ hasCameraPermission: status === 'granted' });
   }
   takePicture = async function() {
+    // this.camera.takePictureAsync({width:128, height:128})
+    // .then(data => {
+    //   var options = {
+    //     method: 'POST',
+    //     url: 'https://shielded-brook-82299.herokuapp.com/image',
+    //     body: {
+    //       data: JSON.stringify(data)
+    //     }
+    //   };
+    //   request(options, function(error, response, body) {
+    //     body = JSON.parse(body);
+    //     if (error) {
+    //       reject(error)
+    //     }
+    //   })
+    // })
+    // .catch((err)=>{
+    //   console.log(err);
+    // })
     if (this.camera) {
-      this.camera.takePictureAsync({base64: true})
+      this.camera.takePictureAsync({base64: true, quality: .01})
       .then(data => {
         console.log(data);
-        fetch('https://damp-shore-64607.herokuapp.com/image', {
-          method: "POST",
+        fetch('https://shielded-brook-82299.herokuapp.com/image', {
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: {
-            data: JSON.stringify(data)
-          }
+          body: data.base64
         })
         .then((d) => {
-          console.log(d);
-          Vibration.vibrate();
+          console.log("event",d);
         })
         .catch((err)=>{
           console.log('fetch failed',err);
         });
-      });
+      }).catch((err) => {
+        console.log(err);
+      })
     }
-   };
+  };
   render() {
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
